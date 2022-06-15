@@ -67,51 +67,52 @@ window.onclick = function (event) {
 
 // }
 
-function signup(e){
+// function signup(e){
 
-  const email = document.getElementById('email1').value;
-  const username = document.getElementById('username1').value;
-  const pass = document.getElementById('password1').value;
+//   const email = document.getElementById('email1').value;
+//   const username = document.getElementById('username1').value;
+//   const pass = document.getElementById('password1').value;
 
-  const user = {
-    email: email,
-    username:username,
-    password: pass,
-  };
+//   const user = {
+//     email: email,
+//     username:username,
+//     password: pass,
+//   };
 
-  const Json =JSON.stringify(user);
-  localStorage.setItem(username, Json);
-  console.log('user added');
+//   const Json =JSON.stringify(user);
+//   localStorage.setItem(username, Json);
+//   console.log('user added');
 
-}
+// }
 
-function loginFunc(e){
-  event.preventDefault();
+// function loginFunc(e){
+//   event.preventDefault();
 
-  const username = document.getElementById('username').value;
-  const pass = document.getElementById('password').value;
-  const feed = document.getElementById('feed');
+//   const username = document.getElementById('username').value;
+//   const pass = document.getElementById('password').value;
+//   const feed = document.getElementById('feed');
 
-  const user = localStorage.getItem(username);
-  const data = JSON.parse(user);
-  console.log(data);
+//   const user = localStorage.getItem(username);
+//   const data = JSON.parse(user);
+//   console.log(data);
 
-  if(user == null){
-    feed.innerHTML = 'wrong username';
-  }else if(username == data.username && pass == data.password){
-    feed.innerHTML += `
-    <div class="card-columns">
-    <div class="card">
-      <img src="https://cdn.motor1.com/images/mgl/wBNko/s1/no.-48-bugatti-veyron-super-sport-for-sale.jpg" class="card-img-top" alt="...">
-      <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-      </div>
-    </div>
-  </div>
-    `;
-    uploadPic();
-  }else{
-    feed.innerHTML ='wrong password';
-  }
+//   if(user == null){
+//     feed.innerHTML = 'wrong username';
+//   }else if(username == data.username && pass == data.password){
+//     feed.innerHTML += `
+//     <div class="card-columns">
+//     <div class="card">
+//       <img src="https://cdn.motor1.com/images/mgl/wBNko/s1/no.-48-bugatti-veyron-super-sport-for-sale.jpg" class="card-img-top" alt="...">
+//       <div class="card-body">
+//           <h5 class="card-title">Card title</h5>
+//       </div>
+//     </div>
+//   </div>
+//     `;
+//     uploadPic();
+//   }else{
+//     feed.innerHTML ='wrong password';
+//   }
+// }
 
-}
+
