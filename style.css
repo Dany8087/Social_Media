@@ -108,3 +108,8 @@
 .sugest-username {
     font-size: 14px
 }
+
+.userPost{
+  height: 50px;
+  width: 50px;
+}

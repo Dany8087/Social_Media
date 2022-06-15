@@ -122,11 +122,18 @@
             // ...
             set(ref(database, 'user/'+ user.uid), {
                 username: username,
-                email: email,
-                password: password
+                email: email
             })
-            window.location.href="mainpage.html";
-        })
+
+                .then (() => {
+                    // The write failed...
+                    // alert('user logged in!')
+                    window.location.href="mainpage.html"
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+            })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
@@ -134,6 +141,9 @@
             console.log(error);
             alert(errorMessage);
         });
-    })
+    });
+    email.value="";
+    username.value="";
+    password.value="";
 </script>
 </html>
