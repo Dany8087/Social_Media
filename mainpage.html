@@ -242,31 +242,20 @@
       appId: "1:294401873637:web:0d5ff696636212f5c9260c",
       measurementId: "G-Y4P72EPZEJ"
     };
+    const uid = localStorage.getItem("uid");
 
-    window.addEventListener('load', getid);
-
-    function getid() {
-      var params = new URLSearchParams(window.location.search);
-      const userid = params.get("uid");
-      console.log(userid);
-    }
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth();
     
     const database = getDatabase();
-    const userinfo = ref(database, 'user/' );
+    const userinfo = ref(database, 'user/' + uid);
     onValue(userinfo, (snapshot) => {
       const data = snapshot.val();
       const email = snapshot.val().email;
       // console.log(email);
     });
     
-    $(document).ready(function(){
-  $("#uploadPost").click(function(){
-    $("#uploadPostModal").modal();
-  });
-});
 
 
 
