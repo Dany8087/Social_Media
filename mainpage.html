@@ -162,10 +162,10 @@
                   style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
               </div>
               <div class="profile-info ml-3" id="profile-info">
-                <form action="mainpage.html" method="get">
-                <span id="profileUsername">1</span><br> 
-                <span id="profileUserid">2</span>
-              </form>
+                <!-- <form action="mainpage.html" method="get">
+                <span id="profileUsername"></span><br> 
+                <span id="profileUserid"></span>
+              </form> -->
               </div>
             </div>
 
@@ -222,7 +222,7 @@
     import { getAuth } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js";
 
 
-    const profileInfo = document.getElementsByClassName('profile-info');
+    const profileInfo = document.getElementById('profile-info');
     // TODO: Add SDKs for Firebase products that you want to use
 
     // https://firebase.google.com/docs/web/setup#available-libraries
@@ -252,9 +252,23 @@
     const userinfo = ref(database, 'user/' + uid);
     onValue(userinfo, (snapshot) => {
       const data = snapshot.val();
-      const email = snapshot.val().email;
-      // console.log(email);
+      console.log(data);
     });
+    
+
+    function updateData(){
+      profileInfo.innerHTML +=`
+        <form action="mainpage.html" method="get">
+          <span id="profileUsername">${username}</span><br> 
+          <span id="profileUserid">${email}</span>
+        </form>
+      `
+    }
+
+
+    document.addEventListener('load', updateData);
+
+   
     
 
 
