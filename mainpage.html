@@ -255,6 +255,7 @@
     const userinfo = ref(database, 'user/' + uid);
     onValue(userinfo, (snapshot) => {
       const data = snapshot.val();
+      console.log(data);
     });
     
     
