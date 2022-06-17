@@ -110,7 +110,7 @@
                 // Signed in 
                 const user = userCredential.user;
 
-
+                const userid = user.uid;
                 const dt = new Date();
                 update(ref(database, 'user/' + user.uid),{
                     last_login: dt

@@ -27,7 +27,7 @@
                             <div class="row justify-content-center">
                                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                                     <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Register New User</p>
-                                    <form class="mx-1 mx-md-4">
+                                    <form class="mx-1 mx-md-4" action="mainpage.html" method="get">
                                         <div class="d-flex flex-row align-items-center mb-4">
 
                                             <div class="form-outline flex-fill mb-0">
@@ -56,7 +56,7 @@
                                         </div>
 
                                         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                            <button type="button" id="signUp" class="btn btn-default btn-lg">Register</button>
+                                                <button type="button" id="signUp" class="btn btn-default btn-lg">Register</button>
                                         </div>
                                     </form>
                                 </div>
@@ -109,6 +109,7 @@
     const database = getDatabase(app);
     const auth = getAuth();
 
+
     signUp.addEventListener('click', (e) => {
 
                 const email = document.getElementById('email').value;
@@ -122,17 +123,23 @@
             // ...
             set(ref(database, 'user/'+ user.uid), {
                 username: username,
-                email: email
+                email: email,
+                uid: user.uid
             })
 
                 .then (() => {
                     // The write failed...
                     // alert('user logged in!')
-                    window.location.href="mainpage.html"
+                    window.localStorage.setItem("username", username);
+                    window.localStorage.setItem("email", email);
+                    window.localStorage.setItem("uid", user.uid);
+
+                    window.location.href= "mainpage.html"
                 })
                 .catch((error) => {
                     alert(error);
                 });
+
             })
         .catch((error) => {
             const errorCode = error.code;
@@ -142,6 +149,8 @@
             alert(errorMessage);
         });
     });
+
+    
     email.value="";
     username.value="";
     password.value="";
