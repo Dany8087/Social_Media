@@ -224,8 +224,6 @@
 
     const profileInfo = document.getElementById('profile-info');
     var uid = localStorage.getItem("uid");
-    const username = localStorage.getItem("username");
-    const email = localstorage.getItem("email");
     // TODO: Add SDKs for Firebase products that you want to use
 
     // https://firebase.google.com/docs/web/setup#available-libraries
@@ -256,18 +254,17 @@
     onValue(userinfo, (snapshot) => {
       const data = snapshot.val();
       console.log(data);
+      profileInfo.innerHTML +=`
+        <form action="mainpage.html" method="get">
+          <span id="profileUsername">${snapshot.val().username}</span><br> 
+          <span id="profileUserid">${snapshot.val().username}</span>
+        </form>
+      `;
     });
     
     
 
-    function updateData(){
-      profileInfo.innerHTML +=`
-        <form action="mainpage.html" method="get">
-          <span id="profileUsername">${username}</span><br> 
-          <span id="profileUserid">${email}</span>
-        </form>
-      `
-    }
+  
 
 
     document.addEventListener('load', updateData);
