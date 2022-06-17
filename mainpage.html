@@ -223,6 +223,7 @@
 
 
     const profileInfo = document.getElementById('profile-info');
+    var uid = localStorage.getItem("uid");
     // TODO: Add SDKs for Firebase products that you want to use
 
     // https://firebase.google.com/docs/web/setup#available-libraries
@@ -242,7 +243,7 @@
       appId: "1:294401873637:web:0d5ff696636212f5c9260c",
       measurementId: "G-Y4P72EPZEJ"
     };
-    const uid = localStorage.getItem("uid");
+    
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
@@ -252,8 +253,8 @@
     const userinfo = ref(database, 'user/' + uid);
     onValue(userinfo, (snapshot) => {
       const data = snapshot.val();
-      console.log(data);
     });
+    console.log(data);
     
 
     function updateData(){
