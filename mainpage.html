@@ -190,7 +190,7 @@
 
       // Import the functions you need from the SDKs you need
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
-      import { getDatabase, get, update, set, child, ref, onValue, push } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
+      import { getDatabase, get, update, set, child, ref, onValue, push, orderByKey, query, endBefore, orderByValue, orderByChild } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
       import { getAuth } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js";
       import { getStorage, ref as sref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-storage.js";
 
@@ -250,16 +250,17 @@
 
       // User feed post display
 
-       const userpost = ref(database, 'user/' + uid);
+       const userpost = query(ref(database, 'user/' + uid), orderByKey(), endBefore('email') );
        onValue(userpost, (snapshot) => {
         snapshot.forEach((childSnapshot) => {
         const childKey = childSnapshot.key;
         const post = childSnapshot.val();
+        console.log(childSnapshot.val().url)
         userfeed.innerHTML += `
                   <div class="col-6 img-fluid">
                     <img
                       src="${childSnapshot.val().url}"
-                      alt="" style="height: 150px; width: 150px;">
+                      alt="" style="height: 150px; width: 150px; margin: 5px;">
                   </div>
         `
         });
@@ -271,12 +272,11 @@
             // User feed post display
 
 
-          const commonfeed = ref(database, 'posts/');
+          const commonfeed = query(ref(database, 'posts/'), orderByChild("desc"));
           onValue(commonfeed, (snapshot) => {
             snapshot.forEach((childSnapshot) => {
               const userid = childSnapshot.val().uid;
               const url = childSnapshot.val().url;
-              console.log(url);
               postFeed.innerHTML += `
               <div class="d-flex flex-column mt-4 mb-4">
                 <div class="card">
@@ -326,7 +326,7 @@
 
                     <div class="position-relative comment-box">
                       <form>
-                        <input class="w-100 border-0 p-3 input-post" placeholder="Add a comment...">
+                        <input class="w-100 border-0 p-3" placeholder="Add a comment...">
                         <button class="btn btn-primary position-absolute btn-ig">Post</button>
                       </form>
                     </div>
@@ -364,7 +364,9 @@
             set(post, {
               url: url
             });
-            document.getElementById('cancel').click(); 
+            document.getElementById('cancel').click();
+            document.getElementById('home').click();
+            
         })
         .catch((error) => {
           console.log(error);
