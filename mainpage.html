@@ -255,7 +255,6 @@
         snapshot.forEach((childSnapshot) => {
         const childKey = childSnapshot.key;
         const post = childSnapshot.val();
-        console.log(childSnapshot.val().url)
         userfeed.innerHTML += `
                   <div class="col-6 img-fluid">
                     <img
@@ -272,11 +271,16 @@
             // User feed post display
 
 
-          const commonfeed = query(ref(database, 'posts/'), orderByChild("desc"));
+          const commonfeed = query(ref(database, 'posts/'), orderByKey("desc"));
           onValue(commonfeed, (snapshot) => {
             snapshot.forEach((childSnapshot) => {
               const userid = childSnapshot.val().uid;
               const url = childSnapshot.val().url;
+              const userinfo = ref(database, 'user/' + childSnapshot.val().uid);
+              onValue(userinfo, (snapshot) => {
+                const username = snapshot.val().username;
+                console.log(username);
+              
               postFeed.innerHTML += `
               <div class="d-flex flex-column mt-4 mb-4">
                 <div class="card">
@@ -287,7 +291,7 @@
                         <img src="profile-1.jpg" alt="..."
                           style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
                       </div>
-                      <span class="font-weight-bold">samkolder</span>
+                      <span class="font-weight-bold">${username}</span>
                     </div>
                   </div>
                   <div class="card-body p-0">
@@ -335,6 +339,7 @@
               </div>
               `
             });
+            });
           });
 
           
@@ -364,7 +369,7 @@
             set(post, {
               url: url
             });
-            document.getElementById('cancel').click();
+
             document.getElementById('home').click();
             
         })

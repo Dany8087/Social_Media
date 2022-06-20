@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class="row py-5 px-4">
+        <div class="col-md-5 mx-auto">
+            <!-- Profile widget -->
+            <div class="bg-white shadow rounded overflow-hidden">
+                <div class="px-4 pt-0 pb-4 cover">
+                    <div class="media align-items-end profile-head">
+                        <div class="profile mr-3"><img
+                                src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80"
+                                alt="..." width="130" class="rounded mb-2 img-thumbnail">
+                            <a href="#" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a>
+                        </div>
+                        <div class="media-body mb-5 text-white">
+                            <h4 class="mt-0 mb-0">Mark Williams</h4>
+                            <p class="small mb-4"> <i class="fas fa-map-marker-alt mr-2"></i>New York</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-light p-4 d-flex justify-content-end text-center">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item">
+                            <h5 class="font-weight-bold mb-0 d-block">215</h5>
+                            <small class="text-muted"> <i class="fas fa-image mr-1"></i>Photos</small>
+                        </li>
+                        <li class="list-inline-item">
+                            <h5 class="font-weight-bold mb-0 d-block">745</h5>
+                            <small class="text-muted">
+                                <i class="fas fa-user mr-1"></i>Followers</small>
+                        </li>
+                        <li class="list-inline-item">
+                            <h5 class="font-weight-bold mb-0 d-block">340</h5>
+                            <small class="text-muted"> <i class="fas fa-user mr-1">
+                                </i>Following</small>
+                        </li>
+                    </ul>
+                </div>
+                <div class="px-4 py-3">
+                    <h5 class="mb-0">About</h5>
+                    <div class="p-4 rounded shadow-sm bg-light">
+                        <p class="font-italic mb-0">Web Developer</p>
+                        <p class="font-italic mb-0">Lives in New York</p>
+                        <p class="font-italic mb-0">Photographer</p>
+                    </div>
+                </div>
+                <div class="py-4 px-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <h5 class="mb-0">Recent photos</h5>
+                        <a href="#" class="btn btn-link text-muted">Show all</a>
+                    </div>
+                    <div class="row">
+                        <div class="card-columns">
+                            <div class="card">
+                              <img src="profile-1.jpg" class="card-img" alt="...">
+                            </div>
+                            <div class="card">
+                                <img src="profile-2.jpg" class="card-img" alt="...">
+                              </div>
+                              <div class="card">
+                                <img src="profile-3.jpg" class="card-img" alt="...">
+                              </div>
+                              <div class="card">
+                                <img src="profile-4.png" class="card-img" alt="...">
+                              </div>
+                              <div class="card">
+                                <img src="profile-5.jpg" class="card-img" alt="...">
+                              </div><div class="card">
+                                <img src="profile-6.jpg" class="card-img" alt="...">
+                              </div><div class="card">
+                                <img src="profile-7.jpg" class="card-img" alt="...">
+                              </div>
+
+                          </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script type="module">
+
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
+    import { getDatabase, get, update, set, child, ref, onValue, push, orderByKey, query, endBefore, orderByValue, orderByChild } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js";
+    import { getStorage, ref as sref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-storage.js";
+
+
+
+    // TODO: Add SDKs for Firebase products that you want to use
+
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+
+    // Your web app's Firebase configuration
+
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDLbdoQqjTSUSkq4edyIPRkY2iDN9Ag7T4",
+      authDomain: "shareclick-ada00.firebaseapp.com",
+      databaseURL: "https://shareclick-ada00-default-rtdb.firebaseio.com",
+      projectId: "shareclick-ada00",
+      storageBucket: "shareclick-ada00.appspot.com",
+      messagingSenderId: "294401873637",
+      appId: "1:294401873637:web:0d5ff696636212f5c9260c",
+      measurementId: "G-Y4P72EPZEJ"
+    };
+
+
+
+    const profileInfo = document.getElementById('profile-info');
+    const userfeed = document.getElementById('userfeed');
+    const postFeed = document.getElementById('postFeed');
+    var uid = localStorage.getItem("uid");
+    const upload = document.getElementById("upload");
+
+
+
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    const database = getDatabase();
+    const storage = getStorage();
+
+
+
+
+    const userinfo = ref(database, 'user/' + uid);
+    onValue(userinfo, (snapshot) => {
+      const data = snapshot.val();
+      profileInfo.innerHTML += `
+      <form action="mainpage.html" method="get">
+        <span id="profileUsername">${snapshot.val().username}</span><br> 
+        <span id="profileUserid">${snapshot.val().email}</span>
+      </form>
+    `;
+    });
+    
+
+    // User feed post display
+
+     const userpost = query(ref(database, 'user/' + uid), orderByKey(), endBefore('email') );
+     onValue(userpost, (snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+      const childKey = childSnapshot.key;
+      const post = childSnapshot.val();
+      console.log(childSnapshot.val().url)
+      userfeed.innerHTML += `
+                <div class="col-6 img-fluid">
+                  <img
+                    src="${childSnapshot.val().url}"
+                    alt="" style="height: 150px; width: 150px; margin: 5px;">
+                </div>
+      `
+      });
+        }, {
+            onlyOnce: true
+        });
+
+       
+          // User feed post display
+
+
+        const commonfeed = query(ref(database, 'posts/'));
+        onValue(commonfeed, (snapshot) => {
+          snapshot.forEach((childSnapshot) => {
+            const userid = childSnapshot.val().uid;
+            const url = childSnapshot.val().url;
+            
+            
+            postFeed.innerHTML += `
+            <div class="d-flex flex-column mt-4 mb-4">
+              <div class="card">
+                <div class="card-header p-3">
+                  <div class="d-flex flex-row align-items-center">
+                    <div
+                      class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo mr-3">
+                      <img src="profile-1.jpg" alt="..."
+                        style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                    </div>
+                    <span class="font-weight-bold">samkolder</span>
+                  </div>
+                </div>
+                <div class="card-body p-0">
+                  <div class="embed-responsive embed-responsive-1by1">
+                    <img class="embed-responsive-item"
+                      src="${childSnapshot.val().url}" />
+                  </div>
+
+                  <div class="d-flex flex-row justify-content-between pl-3 pr-3 pt-3 pb-1">
+                    <ul class="list-inline d-flex flex-row align-items-center m-0">
+                      <li class="list-inline-item">
+                        <button class="btn p-0"><i class="far fa-heart" style="font-size: 1.5em;"></i></button>
+                      </li>
+                      <li class="list-inline-item ml-2">
+                        <button class="btn p-0"><i class="far fa-comment" style="font-size: 1.5em;"></i></button>
+                      </li>
+                      <li class="list-inline-item ml-2">
+                        <button class="btn p-0"><i class="far fa-paper-plane" style="font-size: 1.5em;"></i></button>
+                      </li>
+                    </ul>
+                    <div>
+                      <button class="btn p-0"><i class="far fa-save" style="font-size: 1.5em;"></i></button>
+                    </div>
+                  </div>
+
+                  <div class="pl-3 pr-3 pb-2">
+                    <strong class="d-block">365.354 likes</strong>
+                    <strong class="d-block">samkolder</strong>
+                    <p class="d-block mb-1">Lil drone shot I got a while back but never posted.</p>
+                    <button class="btn p-0">
+                      <span class="text-muted">View all 2,247 comments</span>
+                    </button>
+
+                    <small class="text-muted">4 HOURS AGO</small>
+                  </div>
+
+                  <div class="position-relative comment-box">
+                    <form>
+                      <input class="w-100 border-0 p-3" placeholder="Add a comment...">
+                      <button class="btn btn-primary position-absolute btn-ig">Post</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            `
+          });
+        });
+
+        
+
+    // ******************* upload image to database *****************
+    async function getvalue() {
+      const post = document.getElementById('post').files[0];
+      const data = sref(storage, 'images/' + post.name);
+      await uploadBytes(data, post)
+      .then((snapshot) => {
+      });
+
+      // convert to url...
+      getDownloadURL(data)
+      .then((url) => {
+        const dt = new Date();
+
+      //save post in posts folder
+        set(ref(database, 'posts/'+ dt), {
+            uid: uid,
+            url: url
+          })
+
+      // save post in user profile also
+          const path = ref(database, 'user/' + uid);
+          const post = push(path);
+          set(post, {
+            url: url
+          });
+
+          document.getElementById('home').click();
+          
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    }
+
+    upload.addEventListener('click', getvalue);
+
+
+
+
+
+  </script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+    crossorigin="anonymous"></script>
+
+</html>
