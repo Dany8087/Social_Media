@@ -217,7 +217,6 @@
       };
 
 
-
       const profileInfo = document.getElementById('profile-info');
       const userfeed = document.getElementById('userfeed');
       const postFeed = document.getElementById('postFeed');
@@ -276,10 +275,10 @@
             snapshot.forEach((childSnapshot) => {
               const userid = childSnapshot.val().uid;
               const url = childSnapshot.val().url;
+              // console.log(childSnapshot.key);
               const userinfo = ref(database, 'user/' + childSnapshot.val().uid);
               onValue(userinfo, (snapshot) => {
                 const username = snapshot.val().username;
-                console.log(username);
               
               postFeed.innerHTML += `
               <div class="d-flex flex-column mt-4 mb-4">
@@ -296,8 +295,8 @@
                   </div>
                   <div class="card-body p-0">
                     <div class="embed-responsive embed-responsive-1by1">
-                      <img class="embed-responsive-item"
-                        src="${childSnapshot.val().url}" />
+                      <img class="embed-responsive-item" id="image"
+                        src="${url}" download = ""/>
                     </div>
 
                     <div class="d-flex flex-row justify-content-between pl-3 pr-3 pt-3 pb-1">
@@ -309,7 +308,7 @@
                           <button class="btn p-0"><i class="far fa-comment" style="font-size: 1.5em;"></i></button>
                         </li>
                         <li class="list-inline-item ml-2">
-                          <button class="btn p-0"><i class="far fa-paper-plane" style="font-size: 1.5em;"></i></button>
+                          <button class="btn p-0" id="downloadImage"><i class="far fa-paper-plane" style="font-size: 1.5em;"></i></button>
                         </li>
                       </ul>
                       <div>
@@ -342,8 +341,6 @@
             });
           });
 
-          
-
       // ******************* upload image to database *****************
       async function getvalue() {
         const post = document.getElementById('post').files[0];
@@ -355,7 +352,8 @@
         // convert to url...
         getDownloadURL(data)
         .then((url) => {
-          const dt = new Date();
+          const dt = new Date().getTime();
+          console.log(dt);
 
         //save post in posts folder
           set(ref(database, 'posts/'+ dt), {
