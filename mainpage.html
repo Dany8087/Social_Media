@@ -98,61 +98,7 @@
           <div class="row" >
             <div class="col-8" id="postFeed">
 
-              <!-- <div class="d-flex flex-column mt-4 mb-4">
-                <div class="card">
-                  <div class="card-header p-3">
-                    <div class="d-flex flex-row align-items-center">
-                      <div
-                        class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo mr-3">
-                        <img src="profile-1.jpg" alt="..."
-                          style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
-                      </div>
-                      <span class="font-weight-bold">samkolder</span>
-                    </div>
-                  </div>
-                  <div class="card-body p-0">
-                    <div class="embed-responsive embed-responsive-1by1">
-                      <img class="embed-responsive-item"
-                        src="https://cdn.motor1.com/images/mgl/wBNko/s1/no.-48-bugatti-veyron-super-sport-for-sale.jpg" />
-                    </div>
-
-                    <div class="d-flex flex-row justify-content-between pl-3 pr-3 pt-3 pb-1">
-                      <ul class="list-inline d-flex flex-row align-items-center m-0">
-                        <li class="list-inline-item">
-                          <button class="btn p-0"><i class="far fa-heart" style="font-size: 1.5em;"></i></button>
-                        </li>
-                        <li class="list-inline-item ml-2">
-                          <button class="btn p-0"><i class="far fa-comment" style="font-size: 1.5em;"></i></button>
-                        </li>
-                        <li class="list-inline-item ml-2">
-                          <button class="btn p-0"><i class="far fa-paper-plane" style="font-size: 1.5em;"></i></button>
-                        </li>
-                      </ul>
-                      <div>
-                        <button class="btn p-0"><i class="far fa-save" style="font-size: 1.5em;"></i></button>
-                      </div>
-                    </div>
-
-                    <div class="pl-3 pr-3 pb-2">
-                      <strong class="d-block">365.354 likes</strong>
-                      <strong class="d-block">samkolder</strong>
-                      <p class="d-block mb-1">Lil drone shot I got a while back but never posted.</p>
-                      <button class="btn p-0">
-                        <span class="text-muted">View all 2,247 comments</span>
-                      </button>
-
-                      <small class="text-muted">4 HOURS AGO</small>
-                    </div>
-
-                    <div class="position-relative comment-box">
-                      <form>
-                        <input class="w-100 border-0 p-3 input-post" placeholder="Add a comment...">
-                        <button class="btn btn-primary position-absolute btn-ig">Post</button>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
+         
             </div>
 
             <div class="col-4">
@@ -170,11 +116,7 @@
               <div class="mt-4">
                 <div class="row"  id="userfeed">
 
-                  <!-- <div class="col-6 img-fluid">
-                    <img
-                      src="https://media.istockphoto.com/photos/red-generic-sedan-car-isolated-on-white-background-3d-illustration-picture-id1189903200?k=20&m=1189903200&s=612x612&w=0&h=L2bus_XVwK5_yXI08X6RaprdFKF1U9YjpN_pVYPgS0o="
-                      alt="" style="height: 60px; width: 60px;">
-                  </div> -->
+
 
                 </div>
               </div>
@@ -270,7 +212,7 @@
             // User feed post display
 
 
-          const commonfeed = query(ref(database, 'posts/'), orderByKey("desc"));
+          const commonfeed = query(ref(database, 'posts/'));
           onValue(commonfeed, (snapshot) => {
             snapshot.forEach((childSnapshot) => {
               const userid = childSnapshot.val().uid;
@@ -352,8 +294,7 @@
         // convert to url...
         getDownloadURL(data)
         .then((url) => {
-          const dt = new Date().getTime();
-          console.log(dt);
+          const dt = 0 - (new Date().getTime());
 
         //save post in posts folder
           set(ref(database, 'posts/'+ dt), {

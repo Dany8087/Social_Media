@@ -124,7 +124,7 @@
 
     const profileInfo = document.getElementById('profile-info');
     const userfeed = document.getElementById('userfeed');
-    const postFeed = document.getElementById('postFeed');
+    const postimage = document.getElementById('postimage');
     var uid = localStorage.getItem("uid");
     const upload = document.getElementById("upload");
 
@@ -183,62 +183,8 @@
             const url = childSnapshot.val().url;
             
             
-            postFeed.innerHTML += `
-            <div class="d-flex flex-column mt-4 mb-4">
-              <div class="card">
-                <div class="card-header p-3">
-                  <div class="d-flex flex-row align-items-center">
-                    <div
-                      class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo mr-3">
-                      <img src="profile-1.jpg" alt="..."
-                        style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
-                    </div>
-                    <span class="font-weight-bold">samkolder</span>
-                  </div>
-                </div>
-                <div class="card-body p-0">
-                  <div class="embed-responsive embed-responsive-1by1">
-                    <img class="embed-responsive-item"
-                      src="${childSnapshot.val().url}" />
-                  </div>
-
-                  <div class="d-flex flex-row justify-content-between pl-3 pr-3 pt-3 pb-1">
-                    <ul class="list-inline d-flex flex-row align-items-center m-0">
-                      <li class="list-inline-item">
-                        <button class="btn p-0"><i class="far fa-heart" style="font-size: 1.5em;"></i></button>
-                      </li>
-                      <li class="list-inline-item ml-2">
-                        <button class="btn p-0"><i class="far fa-comment" style="font-size: 1.5em;"></i></button>
-                      </li>
-                      <li class="list-inline-item ml-2">
-                        <button class="btn p-0"><i class="far fa-paper-plane" style="font-size: 1.5em;"></i></button>
-                      </li>
-                    </ul>
-                    <div>
-                      <button class="btn p-0"><i class="far fa-save" style="font-size: 1.5em;"></i></button>
-                    </div>
-                  </div>
-
-                  <div class="pl-3 pr-3 pb-2">
-                    <strong class="d-block">365.354 likes</strong>
-                    <strong class="d-block">samkolder</strong>
-                    <p class="d-block mb-1">Lil drone shot I got a while back but never posted.</p>
-                    <button class="btn p-0">
-                      <span class="text-muted">View all 2,247 comments</span>
-                    </button>
-
-                    <small class="text-muted">4 HOURS AGO</small>
-                  </div>
-
-                  <div class="position-relative comment-box">
-                    <form>
-                      <input class="w-100 border-0 p-3" placeholder="Add a comment...">
-                      <button class="btn btn-primary position-absolute btn-ig">Post</button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
+            postimage.innerHTML += `
+            <img class="embed-responsive-item" src="${url}" />
             `
           });
         });
