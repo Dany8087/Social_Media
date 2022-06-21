@@ -45,11 +45,13 @@
               </li>
               <li class="nav-item">
                 <a href="#" class="link-menu">
-                  <div
-                    class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border topbar-profile-photo"
-                    style="width: 2em; height: 2em; position: absolute;">
-                    <img src="profile-6.jpg" alt="..."
-                      style="transform: scale(1.5); width: 200%; position: absolute; left: 0;">
+                  <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border topbar-profile-photo dropdown" style="width: 2em; height: 2em; position: absolute;">
+                    <img class="dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" src="profile-6.jpg" alt="..." style="transform: scale(1.5); width: 200%; position: absolute; left: 0;">
+                  </div>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
                   </div>
                 </a>
               </li>
@@ -132,7 +134,7 @@
 
       // Import the functions you need from the SDKs you need
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
-      import { getDatabase, get, update, set, child, ref, onValue, push, orderByKey, query, endBefore, orderByValue, orderByChild } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
+      import { getDatabase, get, update, set, child, ref, onValue, push, orderByKey, query, endBefore, orderByValue, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
       import { getAuth } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js";
       import { getStorage, ref as sref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-storage.js";
 
@@ -212,27 +214,32 @@
             // User feed post display
 
 
-          const commonfeed = query(ref(database, 'posts/'));
+          const commonfeed = query(ref(database, 'posts/'), orderByKey());
           onValue(commonfeed, (snapshot) => {
             snapshot.forEach((childSnapshot) => {
               const userid = childSnapshot.val().uid;
+              console.log(userid);
+
               const url = childSnapshot.val().url;
-              // console.log(childSnapshot.key);
-              const userinfo = ref(database, 'user/' + childSnapshot.val().uid);
+              console.log(url);
+              const userinfo = query(ref(database, 'user/' + childSnapshot.val().uid), orderByKey('username'), equalTo('username'));
               onValue(userinfo, (snapshot) => {
                 const username = snapshot.val().username;
+                console.log(username);
+                
               
               postFeed.innerHTML += `
               <div class="d-flex flex-column mt-4 mb-4">
                 <div class="card">
                   <div class="card-header p-3">
                     <div class="d-flex flex-row align-items-center">
-                      <div
-                        class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo mr-3">
+                      <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo mr-3">
                         <img src="profile-1.jpg" alt="..."
                           style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
                       </div>
-                      <span class="font-weight-bold">${username}</span>
+                      <div id="username">
+                        <span class="font-weight-bold">${username}</span>
+                      </div>
                     </div>
                   </div>
                   <div class="card-body p-0">
