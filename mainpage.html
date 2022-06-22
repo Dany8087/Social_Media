@@ -23,10 +23,10 @@
       <div class="d-flex flex-row justify-content-between align-items-center col-lg-12">
         <nav class="navbar navbar-expand-lg navbar-light">
           <div>
-            <a class="navbar-brand" href="mainpage.html"><img src="onlinelogomaker-061422-1532-7854.png" alt="" id="home"></a>
+            <a class="navbar-brand" href="mainpage.html"><img src="onlinelogomaker-061422-1532-7854.png" alt="" id="home" style="border-left-width: 0px;border-left-style: solid;margin-right: 0rem;margin-left: -70px;"></a>
           </div>
 
-          <form class="form-inline my-2 my-lg-0 justify-content-between">
+          <form class="form-inline my-2 my-lg-0 justify-content-between" style="margin-right: 14rem;margin-left: 180px;">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
           </form>
 
@@ -44,14 +44,9 @@
                 <a class="nav-link" href="#"><i class="far fa-heart" style="font-size: 1.5em;"></i></i></a>
               </li>
               <li class="nav-item">
-                <a href="#" class="link-menu">
+                <a href="user_profile.html" class="link-menu">
                   <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border topbar-profile-photo dropdown" style="width: 2em; height: 2em; position: absolute;">
-                    <img class="dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" src="profile-6.jpg" alt="..." style="transform: scale(1.5); width: 200%; position: absolute; left: 0;">
-                  </div>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                    <img id="navprofilepic" src="default-profile-picture1.jpg" alt="..." style="transform: scale(0.6); width: 200%; position: absolute;">
                   </div>
                 </a>
               </li>
@@ -75,7 +70,7 @@
         <div class="modal-body">
           <form>
             <div class="form-group">
-              <label for="exampleFormControlFile1">Example file input</label>
+              <label for="exampleFormControlFile1">Select your image</label>
               <input type="file" class="form-control-file" id="post">
             </div>
             <div class="form-group">
@@ -108,7 +103,7 @@
               <div class="d-flex flex-row align-items-center">
                 <div
                   class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border sidenav-profile-photo">
-                  <img src="profile-6.jpg" alt="..."
+                  <img id="profilepic" src="default-profile-picture1.jpg" alt="..."
                     style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
                 </div>
                 <div class="profile-info ml-3" id="profile-info">
@@ -166,7 +161,8 @@
       const postFeed = document.getElementById('postFeed');
       var uid = localStorage.getItem("uid");
       const upload = document.getElementById("upload");
-
+      const profilepic = document.getElementById('profilepic');
+      const navprofilepic = document.getElementById('navprofilepic');
 
 
 
@@ -188,6 +184,9 @@
           <span id="profileUserid">${snapshot.val().email}</span>
         </form>
       `;
+      profilepic.src = snapshot.val().profile_pic;
+      navprofilepic.src = snapshot.val().profile_pic;
+
       });
       
 
@@ -213,19 +212,20 @@
          
             // User feed post display
 
-
+            var data = [];
           const commonfeed = query(ref(database, 'posts/'), orderByKey());
           onValue(commonfeed, (snapshot) => {
             snapshot.forEach((childSnapshot) => {
+              data.push(childSnapshot.val().uid);
               const userid = childSnapshot.val().uid;
-              console.log(userid);
-
               const url = childSnapshot.val().url;
-              console.log(url);
-              const userinfo = query(ref(database, 'user/' + childSnapshot.val().uid), orderByKey('username'), equalTo('username'));
+
+              
+              const userinfo = query(ref(database, 'user/' + childSnapshot.val().uid));
               onValue(userinfo, (snapshot) => {
                 const username = snapshot.val().username;
-                console.log(username);
+                const propic = snapshot.val().profile_pic;
+
                 
               
               postFeed.innerHTML += `
@@ -234,8 +234,7 @@
                   <div class="card-header p-3">
                     <div class="d-flex flex-row align-items-center">
                       <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center border border-danger post-profile-photo mr-3">
-                        <img src="profile-1.jpg" alt="..."
-                          style="transform: scale(1.5); width: 100%; position: absolute; left: 0;">
+                        <img src="${propic}" alt="profilepicture" style="transform: scale(0.6); width: 200%; position: absolute;">
                       </div>
                       <div id="username">
                         <span class="font-weight-bold">${username}</span>
@@ -327,6 +326,8 @@
 
       upload.addEventListener('click', getvalue);
 
+
+      
 
 
 
