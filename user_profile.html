@@ -53,11 +53,9 @@
           </ul>
         </div>
         <div class="px-4 py-3">
-          <h5 class="mb-0">About</h5>
+          <h5 class="mb-0" href="#updatebio" data-toggle="modal">About  <i class="fas fa-edit"></i></h5>
           <div class="p-4 rounded shadow-sm bg-light">
-            <p class="font-italic mb-0">Web Developer</p>
-            <p class="font-italic mb-0">Lives in New York</p>
-            <p class="font-italic mb-0">Photographer</p>
+            <pre class=font-weight-bold id="bio1"></pre>
           </div>
         </div>
         <div class="py-4 px-4">
@@ -99,6 +97,30 @@
       </div>
     </div>
   </div>
+  <div class="modal" id="updatebio" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Write a Attractive Bio</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="imageCaption">Write A Caption</label>
+              <textarea class="form-control" id="userBio" rows="1"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close">Cancel</button>
+          <button type="button" class="btn btn-primary" id="updatebio">Upload</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 <script type="module">
 
@@ -136,6 +158,9 @@
   const profileimages = document.getElementById('profileimages');
   const upload = document.getElementById('upload');
   const profilepic = document.getElementById('profilepic');
+  const editBio = document.getElementById('editBio');
+  const updatebio = document.getElementById('updatebio');
+
 
 
 
@@ -149,7 +174,7 @@
 
 
 
-
+//******************* load username and email and bio on profile page *********************
   const userinfo = ref(database, 'user/' + uid);
   onValue(userinfo, (snapshot) => {
     const data = snapshot.val();
@@ -159,8 +184,12 @@
       <p class="small mb-4"><i class="far fa-envelope"></i> ${snapshot.val().email}</p>
     `;
     profilepic.src = snapshot.val().profile_pic;
+    bio1.innerHTML = snapshot.val().userBio;
   });
 
+
+
+  //********************** load users post on profile page ********************
   const userpost = query(ref(database, 'user/' + uid), orderByKey(), endBefore('email') );
        onValue(userpost, (snapshot) => {
         snapshot.forEach((childSnapshot) => {
@@ -179,7 +208,7 @@
           });
 
 
-           // ******************* upload image to database *****************
+           // ******************* upload Profile-picture to database *****************
       async function getvalue() {
         const post = document.getElementById('post').files[0];
         const data = sref(storage, 'profile_pic/' + post.name);
@@ -206,7 +235,17 @@
 
       }
 
+      function updateBio (){
+        const userBio = document.getElementById('userBio').value;
+        update(ref(database, 'user/' + uid),{
+                    userBio: userBio
+                })
+          
+          document.getElementById('close').click();
+      }
+
       upload.addEventListener('click', getvalue);
+      updatebio.addEventListener('click', updateBio);
 
 
 

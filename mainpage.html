@@ -113,8 +113,6 @@
               <div class="mt-4">
                 <div class="row"  id="userfeed">
 
-
-
                 </div>
               </div>
             </div>
@@ -210,13 +208,11 @@
           });
 
          
-            // User feed post display
+            // common feed post display
 
-            var data = [];
           const commonfeed = query(ref(database, 'posts/'), orderByKey());
           onValue(commonfeed, (snapshot) => {
             snapshot.forEach((childSnapshot) => {
-              data.push(childSnapshot.val().uid);
               const userid = childSnapshot.val().uid;
               const url = childSnapshot.val().url;
               const imageCaption = childSnapshot.val().imageCaption;
@@ -270,15 +266,13 @@
                       <strong class="d-block">${username}</strong>
                       <p class="d-block mb-1">${imageCaption}</p>
                       <button class="btn p-0">
-                        <span class="text-muted">View all 2,247 comments</span>
+                        <span class="text-muted">View all comments</span>
                       </button>
-
-                      <small class="text-muted">4 HOURS AGO</small>
                     </div>
 
                     <div class="position-relative comment-box">
                       <form>
-                        <input class="w-100 border-0 p-3" placeholder="Add a comment...">
+                        <input class="w-100 border-0 p-3" placeholder="Add a comment..." id="commentsection">
                         <button class="btn btn-primary position-absolute btn-ig">Post</button>
                       </form>
                     </div>
@@ -317,7 +311,6 @@
             set(post, {
               url: url
             });
-
             document.getElementById('home').click();
             
         })
