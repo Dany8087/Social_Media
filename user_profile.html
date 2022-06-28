@@ -102,20 +102,18 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Write a Attractive Bio</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <form>
+          <fo  rm>
             <div class="form-group">
-              <label for="imageCaption">Write A Caption</label>
               <textarea class="form-control" id="userBio" rows="1"></textarea>
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close">Cancel</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
           <button type="button" class="btn btn-primary" id="updatebio">Upload</button>
         </div>
       </div>
@@ -158,7 +156,6 @@
   const profileimages = document.getElementById('profileimages');
   const upload = document.getElementById('upload');
   const profilepic = document.getElementById('profilepic');
-  const editBio = document.getElementById('editBio');
   const updatebio = document.getElementById('updatebio');
 
 
@@ -178,13 +175,12 @@
   const userinfo = ref(database, 'user/' + uid);
   onValue(userinfo, (snapshot) => {
     const data = snapshot.val();
-    console.log(data);
     userdata.innerHTML += `
       <h4 class="mt-0 mb-0">${snapshot.val().username}</h4>
       <p class="small mb-4"><i class="far fa-envelope"></i> ${snapshot.val().email}</p>
     `;
     profilepic.src = snapshot.val().profile_pic;
-    bio1.innerHTML = snapshot.val().userBio;
+    bio1.innerHTML = snapshot.val().user_Bio;
   });
 
 
@@ -238,14 +234,13 @@
       function updateBio (){
         const userBio = document.getElementById('userBio').value;
         update(ref(database, 'user/' + uid),{
-                    userBio: userBio
+                    user_Bio: userBio
                 })
-          
-          document.getElementById('close').click();
       }
 
       upload.addEventListener('click', getvalue);
       updatebio.addEventListener('click', updateBio);
+      userBio.value = "";
 
 
 
